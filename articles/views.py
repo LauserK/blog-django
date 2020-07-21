@@ -14,8 +14,13 @@ class HomeView(View):
 class SinglePostView(View):
     def get(self, request, slug):
         article = get_object_or_404(Article, slug=slug)
+        comments = article.comments.filter(parent__isnull=True)
+
+        
+
         template_name = "single.html"
         context = {
-            "article": article
+            "article": article,
+            "comments": comments
         }
         return render(request, template_name, context)

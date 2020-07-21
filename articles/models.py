@@ -14,7 +14,7 @@ class Comment(models.Model):
   date = models.DateField(auto_now_add=True)
   likes = models.IntegerField(default=0)
   content = models.TextField()
-  parent = models.ForeignKey("self", verbose_name=("comment_parent"), on_delete=models.CASCADE)
+  parent = models.ForeignKey("self", verbose_name=("comment_parent"), on_delete=models.CASCADE, blank=True, null=True, related_name='replies')
 
   def __str__(self):
     return "%s - %s" % (self.author.first_name, self.content)
