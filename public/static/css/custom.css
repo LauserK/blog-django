@@ -78,3 +78,14 @@
   line-height: 30px;
   font-weight: 800;
 }
+
+.remove-comment {
+  color: red;
+  font-weight: bold;
+  cursor: pointer;
+  display: none;
+}
+
+.activado {
+  display: inline-block;
+}

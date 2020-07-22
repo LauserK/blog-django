@@ -1,15 +1,16 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static %} 
 {% block title %}Home{% endblock title %} 
-{% block css %}
+{% block css %} 
   <link rel="stylesheet" href="{% static "css/custom.css" %}"> 
-{% endblock css %}
+{% endblock css %} 
+
 {% block content %}
 <div class="row">
   <!-- Blog Entries Column -->
   <div class="col-md-8">
     <!-- Blog Post -->
-    <div class="card mb-4" style="margin-top:1.5rem;">
+    <div class="card mb-4" style="margin-top: 1.5rem;">
       <img
         class="card-img-top"
         src="http://placehold.it/750x300"
@@ -29,36 +30,73 @@
 
     <div class="mb-4">
       <div class="blog-comment">
-				<h3 class="text-success">Comments</h3>
-                <hr/>
-				<ul class="comments">
+        <h3 class="text-success">Comments</h3>
+        <hr />
+        <ul class="comments">
           {% for comment in comments %}
-            <li class="clearfix">
-              <img src="https://bootdey.com/img/Content/user_1.jpg" class="avatar" alt="">
-              <div class="post-comments">
-                  <p class="meta">{{comment.date}} <a href="#">{{comment.author.username}}</a>: <i class="pull-right"><a href="#"><small>Reply</small></a></i></p>
-                  <p>
-                      {{comment.content}}
-                  </p>
-              </div>
-              <ul class="comments">
+          <li class="clearfix">
+            <img
+              src="https://bootdey.com/img/Content/user_1.jpg"
+              class="avatar"
+              alt=""
+            />
+            <div class="post-comments">
+              <p class="meta">
+                {{comment.date}} <a href="#">{{comment.author.username}}</a>:
+                <i class="pull-right"
+                  ><a href="#"><small onClick="changeObjective(event)" data-pk="{{comment.pk}}">Reply</small></a></i
+                >
+              </p>
+              <p>
+                {{comment.content}}
+              </p>
+            </div>
+            <ul class="comments">
               {% for reply in comment.replies.all %}
-                <li class="clearfix">
-                  <img src="https://bootdey.com/img/Content/user_3.jpg" class="avatar" alt="">
-                    <div class="post-comments">
-                  <p class="meta">{{reply.date}} <a href="#">{{reply.author.username}}</a>: <i class="pull-right"><a href="#"><small>Reply</small></a></i></p>
-                  <p>
-                      {{reply.content}}
+              <li class="clearfix">
+                <img
+                  src="https://bootdey.com/img/Content/user_3.jpg"
+                  class="avatar"
+                  alt=""
+                />
+                <div class="post-comments">
+                  <p class="meta">
+                    {{reply.date}} <a href="#">{{reply.author.username}}</a>:
+                    <i class="pull-right"
+                      ><a href="#"><small onClick="changeObjective(event)" data-pk="{{comment.pk}}">Reply</small></a></i
+                    >
                   </p>
-              </div>
-                </li>
+                  <p>
+                    {{reply.content}}
+                  </p>
+                </div>
+              </li>
               {% endfor %}
-              </ul>
-            </li>
-          
+            </ul>
+          </li>
           {% endfor %}
-				</ul>
-			</div>
+        </ul>
+      </div>
+      <div class="comment-reply">
+        <form method="post">
+          {% csrf_token %}
+          <h3>Añade un nuevo comentario</h3>
+          <br />
+          <div class="form-group row">
+            <p>Respondiendo al comentario: <span id="span-answer"></span> <span class="remove-comment" onClick="removeObjective(event)">X</span></p>
+          </div>
+          <input type="hidden" name="span-answer" value="post" />
+          <div class="form-group row">
+            <textarea
+              class="col-sm-12"
+              name="body"
+              id="body"
+              rows="3"
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-warning">Enviar</button>
+        </form>
+      </div>
     </div>
   </div>
 
@@ -129,3 +167,7 @@
 <!-- /.row -->
 
 {% endblock content %}
+
+{% block javascript %}
+  <script src="{% static "js/comments.js"%}"></script>
+{% endblock javascript %}
