@@ -62,9 +62,6 @@
                 <div class="post-comments">
                   <p class="meta">
                     {{reply.date}} <a href="#">{{reply.author.username}}</a>:
-                    <i class="pull-right"
-                      ><a href="#"><small onClick="changeObjective(event)" data-pk="{{comment.pk}}">Reply</small></a></i
-                    >
                   </p>
                   <p>
                     {{reply.content}}
@@ -81,10 +78,6 @@
         <form method="post">
           {% csrf_token %}
           <h3>Añade un nuevo comentario</h3>
-          <br />
-          <div class="form-group row">
-            <p>Respondiendo al comentario: <span id="span-answer"></span> <span class="remove-comment" onClick="removeObjective(event)">X</span></p>
-          </div>
           <input type="hidden" name="span-answer" value="post" />
           <div class="form-group row">
             <textarea
@@ -92,6 +85,8 @@
               name="body"
               id="body"
               rows="3"
+              required
+              placeholder="Escribe tu comentario..."
             ></textarea>
           </div>
           <button type="submit" class="btn btn-warning">Enviar</button>
